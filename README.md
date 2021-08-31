@@ -31,7 +31,7 @@ First build the project:
 ./mvnw clean package
 ```
 
-### Start infrastructure
+### Start / stop infrastructure
 
 ```
 docker compose up -d
