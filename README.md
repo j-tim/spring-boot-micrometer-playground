@@ -1,4 +1,4 @@
-# Spring Boot Mcrometer Playground
+# Spring Boot Micrometer Playground
 
 Playground project for Spring Boot, Micrometer including both Prometheus and Elasticsearch.
 
