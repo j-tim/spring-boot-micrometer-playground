@@ -1,0 +1,31 @@
+spring:
+  application:
+    name: example-application
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: metrics, health, info, prometheus
+
+  metrics:
+    export:
+      elastic:
+        index: microservices-metrics
+        index-date-format:
+        # The default step is 1 minute
+        step: 1m
+
+    tags:
+      application: ${spring.application.name}
+
+    enable:
+      # Only enable the custom metric
+      random: true
+      # Disable other metrics
+      jvm: false
+      tomcat: false
+      logback: false
+      process: false
+      system: false
+      http: false

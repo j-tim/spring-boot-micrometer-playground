@@ -1,0 +1,10 @@
+route:
+  receiver: 'email'
+
+receivers:
+  - name: 'email'
+    email_configs:
+      - to: 'notifications@yourcompanyhere.io'
+        from: 'alertmanager@yourcompanyhere.io'
+        smarthost: 'mail:1025'
+        require_tls: false

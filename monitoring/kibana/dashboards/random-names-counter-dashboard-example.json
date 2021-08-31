@@ -1,0 +1,65 @@
+{
+  "version": "7.14.0",
+  "objects": [
+    {
+      "id": "bffc90b0-0965-11ec-a476-6bf2fb0dc609",
+      "type": "dashboard",
+      "namespaces": [
+        "default"
+      ],
+      "updated_at": "2021-08-31T06:33:42.089Z",
+      "version": "WzExLDFd",
+      "attributes": {
+        "title": "Dashboard - Counter - Random generated names",
+        "hits": 0,
+        "description": "",
+        "panelsJSON": "[{\"version\":\"7.14.0\",\"type\":\"visualization\",\"gridData\":{\"x\":0,\"y\":0,\"w\":44,\"h\":13,\"i\":\"af3afe4e-fa3e-4de6-bf18-f1f1e155aa95\"},\"panelIndex\":\"af3afe4e-fa3e-4de6-bf18-f1f1e155aa95\",\"embeddableConfig\":{\"savedVis\":{\"title\":\"Random names created dashboard (new)\",\"description\":\"\",\"type\":\"metrics\",\"params\":{\"time_range_mode\":\"entire_time_range\",\"id\":\"712cf462-c8ac-4730-9f18-395524d9dace\",\"type\":\"timeseries\",\"series\":[{\"id\":\"516e4440-0974-11ec-973e-8166cfd71a9b\",\"color\":\"#68BC00\",\"split_mode\":\"filter\",\"palette\":{\"type\":\"palette\",\"name\":\"default\"},\"metrics\":[{\"id\":\"516e4441-0974-11ec-973e-8166cfd71a9b\",\"type\":\"sum\",\"field\":\"count\"},{\"id\":\"6b5f3260-0974-11ec-973e-8166cfd71a9b\",\"type\":\"math\",\"variables\":[{\"id\":\"70bccb00-0974-11ec-973e-8166cfd71a9b\",\"name\":\"sum\",\"field\":\"516e4441-0974-11ec-973e-8166cfd71a9b\"}],\"script\":\"params.sum / (params._interval / 1000)\"}],\"separate_axis\":0,\"axis_position\":\"right\",\"formatter\":\"number\",\"chart_type\":\"line\",\"line_width\":1,\"point_size\":1,\"fill\":0.5,\"stacked\":\"none\",\"label\":\"Random Generated names (rate per second)\",\"type\":\"timeseries\",\"filter\":{\"query\":\"name : \\\"random_names_created\\\" \",\"language\":\"kuery\"}}],\"time_field\":\"@timestamp\",\"use_kibana_indexes\":true,\"interval\":\"1m\",\"axis_position\":\"left\",\"axis_formatter\":\"number\",\"axis_scale\":\"normal\",\"show_legend\":1,\"show_grid\":1,\"tooltip_mode\":\"show_all\",\"drop_last_bucket\":0,\"isModelInvalid\":false,\"filter\":{\"query\":\"name: \\\"random_names_created\\\" \",\"language\":\"kuery\"},\"background_color\":null,\"index_pattern_ref_name\":\"metrics_af3afe4e-fa3e-4de6-bf18-f1f1e155aa95_0_index_pattern\"},\"uiState\":{},\"data\":{\"aggs\":[],\"searchSource\":{\"query\":{\"query\":\"\",\"language\":\"kuery\"},\"filter\":[]}}},\"enhancements\":{},\"hidePanelTitles\":false},\"title\":\"Random names created dashboard (rate per second)\"}]",
+        "optionsJSON": "{\"useMargins\":true,\"syncColors\":false,\"hidePanelTitles\":false}",
+        "version": 1,
+        "timeRestore": true,
+        "timeTo": "now",
+        "timeFrom": "now-1h",
+        "refreshInterval": {
+          "pause": true,
+          "value": 0
+        },
+        "kibanaSavedObjectMeta": {
+          "searchSourceJSON": "{\"query\":{\"query\":\"\",\"language\":\"kuery\"},\"filter\":[]}"
+        }
+      },
+      "references": [
+        {
+          "name": "af3afe4e-fa3e-4de6-bf18-f1f1e155aa95:metrics_af3afe4e-fa3e-4de6-bf18-f1f1e155aa95_0_index_pattern",
+          "type": "index-pattern",
+          "id": "c408bc60-0960-11ec-a476-6bf2fb0dc609"
+        }
+      ],
+      "migrationVersion": {
+        "dashboard": "7.14.0"
+      },
+      "coreMigrationVersion": "7.14.0"
+    },
+    {
+      "id": "c408bc60-0960-11ec-a476-6bf2fb0dc609",
+      "type": "index-pattern",
+      "namespaces": [
+        "default"
+      ],
+      "updated_at": "2021-08-31T06:33:42.089Z",
+      "version": "WzEyLDFd",
+      "attributes": {
+        "fieldAttrs": "{\"count\":{\"count\":1},\"name\":{\"count\":2},\"type\":{\"count\":1}}",
+        "title": "microservices-metrics*",
+        "timeFieldName": "@timestamp",
+        "fields": "[]",
+        "typeMeta": "{}",
+        "runtimeFieldMap": "{}"
+      },
+      "references": [],
+      "migrationVersion": {
+        "index-pattern": "7.11.0"
+      },
+      "coreMigrationVersion": "7.14.0"
+    }
+  ]
+}

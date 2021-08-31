@@ -1,0 +1,101 @@
+version: '3.2'
+
+services:
+
+  # https://registry.hub.docker.com/r/prom/prometheus
+  prometheus:
+    container_name: prometheus
+    image: prom/prometheus:v2.29.2
+    ports:
+      - 9090:9090
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    command:
+      # Enable to refresh the configuration using the reload endpoint http://localhost:9090/-/reload
+      - '--web.enable-lifecycle'
+      # We need to pass all the other command flags as well
+      # See: https://github.com/prometheus/prometheus/blob/b4317768b9476ee09a770c5dac6d826a8e7000f2/Dockerfile#L23-L26
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries --web.console.templates=/usr/share/prometheus/consoles'
+    volumes:
+      - ${PWD}/monitoring/prometheus/:/etc/prometheus/
+
+  grafana:
+    image: grafana/grafana:8.1.2
+    container_name: grafana
+    ports:
+    - 3000:3000
+    environment:
+      # Disable Authentication use in your development environment only!
+      GF_USERS_ALLOW_SIGN_UP: "false"
+      GF_AUTH_DISABLE_LOGIN_FORM: "true"
+      GF_AUTH_ANONYMOUS_ENABLED: "true"
+      GF_AUTH_ANONYMOUS_ORG_ROLE: "Admin"
+    volumes:
+      - ${PWD}/monitoring/grafana/provisioning/:/etc/grafana/provisioning/
+      - ${PWD}/monitoring/grafana/dashboards/:/etc/grafana/dashboards/
+    depends_on:
+      - prometheus
+
+  # https://registry.hub.docker.com/r/prom/alertmanager
+  # http://localhost:9093
+  alertmanager:
+    image: prom/alertmanager:v0.23.0
+    container_name: alertmanager
+    environment:
+      TZ: ${TZ}
+    ports:
+      - 9093:9093
+    volumes:
+      - ${PWD}/monitoring/alertmanager/:/etc/alertmanager/
+    restart: always
+    command:
+      - '--config.file=/etc/alertmanager/alertmanager.yml'
+      - '--storage.path=/alertmanager'
+
+  # Elasticsearch for metrics
+  # https://www.docker.elastic.co/r/elasticsearch
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.14.0
+    container_name: elasticsearch
+    environment:
+      - "TZ=${TZ}"
+      - xpack.security.enabled=false
+      - discovery.type=single-node
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
+    cap_add:
+      - IPC_LOCK
+    ports:
+      - 9200:9200
+      - 9300:9300
+
+  # https://www.docker.elastic.co/r/kibana
+  kibana:
+    container_name: kibana
+    image: docker.elastic.co/kibana/kibana:7.14.0
+    environment:
+      - "TZ=${TZ}"
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+      - XPACK_TELEMETRY_ENABLED=false
+    ports:
+      - 5601:5601
+    depends_on:
+      - elasticsearch
+
+  # https://registry.hub.docker.com/r/mailhog/mailhog
+  # http://localhost:8025
+  mail:
+    image: mailhog/mailhog:v1.0.1
+    container_name: mail
+    environment:
+      TZ: ${TZ}
+    ports:
+      - 1025:1025
+      - 8025:8025
